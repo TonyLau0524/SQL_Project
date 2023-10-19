@@ -1,35 +1,23 @@
-# dfhjsdkfhksdfhjksd]
+## 💿DVD Rental PostgreSQL Project
 
 
-<p align="center">
-  <img src="https://github.com/gordonkwokkwok/DVD-Rental-PostgreSQL-Project/assets/112631794/0ceaa2a3-47a5-4041-8b69-08163b10ea98" alt="Image" width="600">
-</p>
+![enter image description here](https://img.lemde.fr/2022/05/04/0/0/5760/3840/800/0/75/0/f5f9669_1651669070859-rea9343106-1.jpg)
 
-## 📚 Introduction
-Welcome to the DVD Rental Database Project, a hands-on application of PostgreSQL, the powerful open-source object-relational database system. 🎓
-
-This project encapsulates 15 meticulously designed tables: 'actor', 'film', 'film_actor', 'category', 'film_category', 'store', 'inventory', 'rental', 'payment', 'staff', 'customer', 'address', 'city', and 'country'. Each table represents various facets of a real-world DVD rental business. 📊
-
-As you navigate through this project, you'll gain practical insights into the capabilities of PostgreSQL, refine your database management skills, and understand complex data structures and relationships. Welcome to a learning journey that unravels the intricate operations of a DVD rental store. 🚀
-
-## 🎯 Objective
-- Implement SQL querying techniques to explore and manipulate the data.
-- Utilize PostgreSQL database system for managing and interacting with the data.
-- Leverage Git commands for version control and effective collaboration.
-- Maintain comprehensive project documentation and a well-structured code repository here on GitHub.
+##  Introduction
+In this project, DVD rental data give a lot of insight to the business and we are going to use SQL querying techniques we have learnt from CanTek to explore and manipulate the data.The DVD rental database dataset can be found from [here](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/)
 
 
-## 🔧 Tool
+## Tool
  - PostgreSQL (version 16)
- - pgAdmin 4 (version 7.3)
+ - pgAdmin 4 (version 7.7)
  - Git (version 2.37.1)
 
-## 📊 DVD Rental ER Model
+##  DVD Rental ER Model
 <p align="center">
   <img src="https://github.com/gordonkwokkwok/DVD-Rental-PostgreSQL-Project/assets/112631794/5c55cbde-9e67-4363-99bc-177bf7903882" alt="Image" width="700">
 </p>
 
-## 📃 DVD Rental Database Tables
+##  DVD Rental Database Tables
 There are 15 tables in the DVD Rental database:
 
 - actor – stores actors data including first name and last name.
@@ -47,48 +35,31 @@ There are 15 tables in the DVD Rental database:
 - city – stores city names.
 - country – stores country names.
 
-## 🌐 Dataset
-- [Link](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/) ; or
-- [Download Here](https://github.com/gordonkwokkwok/DVD-Rental-PostgreSQL-Project/tree/main/dataset)
+## SQL analysis of DVD rental database
 
-📝 To restore a .tar file in pgAdmin, follow these steps:
-```
-1. First, you need to convert the dvdrental.zip file into a dvdrental.tar file. You can use a compression tool like 7-Zip or WinRAR to extract the contents of the dvdrental.zip file. Once extracted, you can create a new archive and save it as dvdrental.tar.
+**Query_01: Comparison Operator**
 
-2. Open pgAdmin and connect to your PostgreSQL database server.
+    SELECT film_id, title, replacement_cost
+    FROM film
+    WHERE replacement_cost > 20
+    ORDER BY replacement_cost DESC
 
-3. In the left column of pgAdmin, locate the "Servers" group and expand it. Then expand the server you want to restore the dvdrental.tar file to.
+This query retrieved which film's replacement cost was larger than $20 with the film ID, film title, and the replacement cost. The table is in descending order by the replacement cost of the film. In this query, comparison operator '>' is used to compare the replacement cost of each film which larger than $20.
 
-4. Right-click on the "Databases" option under the server and select "Restore..." from the context menu.
+**Query_02: Logical operator**
 
-5. In the "Restore" dialog box, navigate to the location where you have the dvdrental.tar file saved. Select the file and click on the "OK" or "Open" button to start the restore process.
+    SELECT staff_id, first_name, last_name, active
+    FROM staff
+    WHERE active in (true)
 
-6. Configure the restore options as needed. You can specify the target database, choose whether to drop existing objects, set the format to "Custom or Tar," and adjust other options according to your requirements.
+This query retrieved which staff is currently working in the DVD store with the staff ID, staff's first name, last name, and their active status. In this query, the logical operator "IN" is used to check whether the staff's active status is true or not.
 
-7. Click the "Restore" button to initiate the restore process. pgAdmin will read the dvdrental.tar file and restore the database schema and data accordingly.
+**Query_03: Wildcard**
 
-8. Once the restore process completes, you should see a success message indicating that the restore was successful.
-```
-By following these steps, you will be able to restore the dvdrental.tar file in pgAdmin and have the database available for use.
+    SELECT city_id, city
+    FROM city
+    WHERE city ILIKE '%c%'
 
-## 👥 Contributer
-- [Gordon Kwok](https://www.linkedin.com/in/gordonkwokch/)
+This query retrieved which city contains the letter 'c' in their city name with their city ID. The wildcard "ILIKE" is used to check which city contains the letter 'c' in it.
 
-## 🤝 Acknowledgments
 
-I would like to express our gratitude to the following individuals and organizations for their contributions and support in making this project possible:
-
-- Will: an instructor of the course, provided valuable guidance, mentorship, and expertise throughout the project. His support was instrumental in shaping the direction of the project and ensuring its success.
-- [Cantek IT Program](https://www.cantekcanada.com/): Cantek IT Program, an educational institution, played a significant role in supporting the project. They provided resources, facilities, and a conducive learning environment for the team to work on the project.
-- [PostgreSQL Tutorial Website](https://www.postgresqltutorial.com/): The PostgreSQL Tutorial website offered a valuable contribution by providing a dataset sample. This dataset was instrumental in conducting various experiments, analyses, and demonstrations throughout the project.
-
-I am thankful for their valuable input, feedback, and assistance throughout the development process. Their expertise and dedication have greatly enhanced the quality and functionality of this project.
-
-## 💪 Support
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/gordonhei25)
-
-Give a ⭐️ if this project helped you!
-
-<p>
-  <img src="https://github.com/gordonkwokkwok/DVD-Rental-PostgreSQL-Project/assets/112631794/04df4208-da1b-4c88-b18d-d711c0785d31" alt="Alt Text" width="260">
-</p>
