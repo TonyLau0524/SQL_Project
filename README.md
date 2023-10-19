@@ -1,4 +1,5 @@
 📚 Introduction
+Hi there ✋!
 
 Welcome to the DVD Rental Database Project, a hands-on application of PostgreSQL, the powerful open-source object-relational database system. 🎓
 
