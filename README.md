@@ -37,29 +37,123 @@ There are 15 tables in the DVD Rental database:
 
 ## SQL analysis of DVD rental database
 
-**Query_01: Comparison Operator**
+**Query_01: Actor whose first name start with A **
 
-    SELECT film_id, title, replacement_cost
-    FROM film
-    WHERE replacement_cost > 20
-    ORDER BY replacement_cost DESC
+    select count(*) as number_of_actor_whose_first_name_start_with_A from actor
+    where first_name ilike 'A%'
 
-This query retrieved which film's replacement cost was larger than $20 with the film ID, film title, and the replacement cost. The table is in descending order by the replacement cost of the film. In this query, comparison operator '>' is used to compare the replacement cost of each film which larger than $20.
+This query retrieved the number of actor whose first name start with A.
 
-**Query_02: Logical operator**
+**Query_02: The film rating**
 
-    SELECT staff_id, first_name, last_name, active
-    FROM staff
-    WHERE active in (true)
+    select rating, count(*) as number_of_films from film
+    group by rating
+    order by count(*) desc
 
-This query retrieved which staff is currently working in the DVD store with the staff ID, staff's first name, last name, and their active status. In this query, the logical operator "IN" is used to check whether the staff's active status is true or not.
+This query retrieved which the film rating is the most in the film .
 
-**Query_03: Wildcard**
+**Query_03: Top rental customer**
 
-    SELECT city_id, city
-    FROM city
-    WHERE city ILIKE '%c%'
+    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
+    join rental as r on c.customer_id = r.customer_id
+    join address as a on c.address_id = a.address_id
+    join city  on a.city_id = city.city_id
+    join country on city.country_id = country.country_id
+    group by c.customer_id ,country
+    order by count(*) desc, first_name
+    limit 10;
 
-This query retrieved which city contains the letter 'c' in their city name with their city ID. The wildcard "ILIKE" is used to check which city contains the letter 'c' in it.
+This query retrieved which customers rent the most film DVD in the store. by using Inner Join the country data, It gives the nationality of the customers.
+
+**Query_04: Top rental country**
+
+    select country, count(*)  as number_of_rental from customer as c
+    join rental as r on c.customer_id = r.customer_id
+    join address as a on c.address_id = a.address_id
+    join city  on a.city_id = city.city_id
+    join country on city.country_id = country.country_id
+    group by country
+    order by count(*) desc
+    limit 10;
+
+This query retrieved which countries rent the most film DVD in the store. This result tells us the target audience from.
+
+**Query_05: The median **
+
+    select
+    (
+	     (select max(length) from (SELECT  length from film order by length limit 500))
+    + (select min(length) from (SELECT  length from film order by length desc limit 500))
+	       )/2 as length_median
+
+This query retrieved the median of the film lengths. There is no MEDIAN() function in SQL Server but we still can work it out.
+
+**Query_06: Short or Long film? **
+
+    With duration_table as(SELECT *,
+    case 
+    when length <60 then 'under 60mins'
+    when length >=60 and length<90 then '60 - 90mins'
+    when length >=90 and length<120 then '90 - 120mins'
+    else 'more than 120 mins'
+    end as film_duration
+
+    from film as f
+    join inventory as i on f.film_id = i.film_id
+    join rental as r on i.inventory_id = r.inventory_id)
+
+    select film_duration,count(*) as number_of_rental
+  
+    from duration_table
+    group by film_duration
+    order by number_of_rental desc;
+  
+ This query retrieved which the film lengths is rent the most in 
+
+    
+**Query_07: Top rental customer**
+
+    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
+    join rental as r on c.customer_id = r.customer_id
+    join address as a on c.address_id = a.address_id
+    join city  on a.city_id = city.city_id
+    join country on city.country_id = country.country_id
+    group by c.customer_id ,country
+    order by count(*) desc, first_name
+    limit 10;
+
+    
+**Query_08: Top rental customer**
+
+    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
+    join rental as r on c.customer_id = r.customer_id
+    join address as a on c.address_id = a.address_id
+    join city  on a.city_id = city.city_id
+    join country on city.country_id = country.country_id
+    group by c.customer_id ,country
+    order by count(*) desc, first_name
+    limit 10;
+
+    
+**Query_09: Top rental customer**
+
+    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
+    join rental as r on c.customer_id = r.customer_id
+    join address as a on c.address_id = a.address_id
+    join city  on a.city_id = city.city_id
+    join country on city.country_id = country.country_id
+    group by c.customer_id ,country
+    order by count(*) desc, first_name
+    limit 10;
 
 
+**Query_10: Top rental customer**
+
+    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
+    join rental as r on c.customer_id = r.customer_id
+    join address as a on c.address_id = a.address_id
+    join city  on a.city_id = city.city_id
+    join country on city.country_id = country.country_id
+    group by c.customer_id ,country
+    order by count(*) desc, first_name
+    limit 10;
