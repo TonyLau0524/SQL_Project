@@ -50,7 +50,7 @@ This query retrieved the number of actor whose first name start with A.
     group by rating
     order by count(*) desc
 
-This query retrieved which the film rating is the most in the film .
+This query retrieved which the film rating is the most in all the film that DVD rental has.
 
 **Query_03: Top customer in rental**
 
@@ -108,7 +108,7 @@ This query retrieved the median of the film lengths. There is no MEDIAN() functi
     group by film_duration
     order by number_of_rental desc;
   
- This query retrieved which the film lengths is rent the most in 
+ This query retrieved which film lengths have the higher rate in rental. There is no classification in film lengths so we try to use case when function to identify.
 
     
 **Query_07: Top actor in rental**
@@ -123,7 +123,7 @@ This query retrieved the median of the film lengths. There is no MEDIAN() functi
     order by number_of_rental desc
     limit 10;
 
-This query retrieved the actors whose have the highest rate in rental. 
+This query retrieved the actors whose have the highest rate in rental. The result tell us that the films with these actors may bring more revenue to DVD rental.
     
 **Query_08: Top customer in revenue **
 
@@ -149,9 +149,6 @@ This query retrieved the customers whose have the highest amount and their count
     where number_of_actors = 0;
 
 This query retrieved which the films have zero actor.
-
-
-
 
 
 **Query_10: Top 3 films in revenue**
