@@ -37,7 +37,7 @@ There are 15 tables in the DVD Rental database:
 
 ## SQL analysis of DVD rental database
 
-**Query_01: Actor whose first name start with A **
+**Query_01: Actor whose first name start with A**
 
     select count(*) as number_of_actor_whose_first_name_start_with_A from actor
     where first_name ilike 'A%'
@@ -52,7 +52,7 @@ This query retrieved the number of actor whose first name start with A.
 
 This query retrieved which the film rating is the most in the film .
 
-**Query_03: Top rental customer**
+**Query_03: Top customer in rental**
 
     select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
     join rental as r on c.customer_id = r.customer_id
@@ -65,7 +65,7 @@ This query retrieved which the film rating is the most in the film .
 
 This query retrieved which customers rent the most film DVD in the store. by using Inner Join the country data, It gives the nationality of the customers.
 
-**Query_04: Top rental country**
+**Query_04: Top country in rental**
 
     select country, count(*)  as number_of_rental from customer as c
     join rental as r on c.customer_id = r.customer_id
@@ -111,49 +111,58 @@ This query retrieved the median of the film lengths. There is no MEDIAN() functi
  This query retrieved which the film lengths is rent the most in 
 
     
-**Query_07: Top rental customer**
+**Query_07: Top actor in rental**
 
-    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
-    join rental as r on c.customer_id = r.customer_id
-    join address as a on c.address_id = a.address_id
-    join city  on a.city_id = city.city_id
-    join country on city.country_id = country.country_id
-    group by c.customer_id ,country
-    order by count(*) desc, first_name
+    select a.actor_id,first_name,last_name, count(*) as number_of_rental
+    from actor as a
+    join film_actor fa on a.actor_id = fa.actor_id
+    join film as f on fa.film_id = f.film_id
+    join inventory as i on f.film_id = i.film_id
+    join rental as r on i.inventory_id = r.inventory_id
+    group by a.actor_id
+    order by number_of_rental desc
     limit 10;
 
+This query retrieved the actors whose have the highest rate in rental. 
     
-**Query_08: Top rental customer**
+**Query_08: Top customer in revenue **
 
-    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
-    join rental as r on c.customer_id = r.customer_id
+    select first_name, last_name,sum(amount) as Total_amount, country from customer as c
+    join payment as p on c.customer_id = p.customer_id
     join address as a on c.address_id = a.address_id
     join city  on a.city_id = city.city_id
     join country on city.country_id = country.country_id
     group by c.customer_id ,country
-    order by count(*) desc, first_name
+    order by sum( amount) desc, first_name
     limit 10;
 
+This query retrieved the customers whose have the highest amount and their country.
     
-**Query_09: Top rental customer**
+**Query_09: Film with zero actor**
 
-    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
-    join rental as r on c.customer_id = r.customer_id
-    join address as a on c.address_id = a.address_id
-    join city  on a.city_id = city.city_id
-    join country on city.country_id = country.country_id
-    group by c.customer_id ,country
-    order by count(*) desc, first_name
-    limit 10;
+    With no_actor_table as (select distinct title, 
+    count(actor_id)over(PARTITION BY title) as Number_of_Actors from film_actor as fa
+    right join film as f on fa.film_id = f.film_id
+    order by number_of_actors)
+
+    select title from no_actor_table
+    where number_of_actors = 0;
+
+This query retrieved which the films have zero actor.
 
 
-**Query_10: Top rental customer**
 
-    select first_name, last_name ,count(*)  as number_of_rental,country from customer as c
-    join rental as r on c.customer_id = r.customer_id
-    join address as a on c.address_id = a.address_id
-    join city  on a.city_id = city.city_id
-    join country on city.country_id = country.country_id
-    group by c.customer_id ,country
-    order by count(*) desc, first_name
-    limit 10;
+
+
+**Query_10: Top 3 films in revenue**
+
+    select title, COALESCE(sum(amount),0) as revenue
+    from film as f
+    full join inventory as i on f.film_id = i.film_id
+    full join rental as r on i.inventory_id = r.inventory_id
+    full join payment as p on p.rental_id = r.rental_id
+    group by title
+    order by revenue desc
+    limit 3;
+
+This query retrieved which the films have the highest revenue.
