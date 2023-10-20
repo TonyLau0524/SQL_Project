@@ -166,3 +166,6 @@ This query retrieved which the films have zero actor.
     limit 3;
 
 This query retrieved which the films have the highest revenue.
+
+
+The results of all queries have been saved in the corresponding folder of each query. The results are stored in csv files.
